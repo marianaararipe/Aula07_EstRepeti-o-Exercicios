@@ -26,37 +26,35 @@ palavras = [
 palavra = random.choice(palavras)
 letras_tentadas = []
 erros = 0
-limite = 6
+limite_erros = 6
 
 print("\n=== JOGO DA FORCA ===")
 
-while erros < limite:
+while erros < limite_erros:
     acertou = True
 
 
     print("\nPalavra: ", end="")
     for letra in palavra:
-        if letra in letras_tentadas: #mostra a letra na posição
-            print(letra, end=" ")
+        if letra in letras_tentadas:
+            print(letra, end=" ")     #mostra a letra na posição
         else:
-            print("_", end=" ") # substitui os caracteres por _
+            print("_", end=" ")       # substitui os caracteres por _
             acertou = False
 
-    # Verifica vitória
-    if acertou:
-        print("\nVocê venceu!")
-        print("Palavra:", palavra)
-        break
 
-    # alguns status
-    print("\nLetras tentadas:", letras_tentadas)
-    print("Tentativas restantes:", limite - erros)
+
+
+    # alguns status gerais
+    print("\nLetras tentadas:", letras_tentadas)      # mostrar letras já usadas
+    print("Erros restantes:", limite_erros - erros)   # mostrar quantos erros ainda pode cometer
 
 
     # entrada das letras
     tentativa = input("Digite uma letra: ").lower()
 
-    # Validação
+
+    # validacao de letras já usadas
     if tentativa in letras_tentadas:
         print("Você já tentou essa letra! Escolha outra letra")
         continue
@@ -64,14 +62,21 @@ while erros < limite:
     letras_tentadas.append(tentativa)
 
 
-    # erros e acertos
+    # erros e acertos mensagens
     if tentativa not in palavra:
         erros += 1
         print("❌ Errou!")
     else:
         print("✅ Acertou!")
 
-# Derrota
-if erros == limite:
+
+    # ganhou?
+    if acertou:
+        print("\nVocê venceu!")
+        print("Palavra:", palavra)
+        break
+
+# derrota se chegou ao limite de erros
+if erros == limite_erros:
     print("\nVocê perdeu!")
     print("A palavra era:", palavra)
